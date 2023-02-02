@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="flex flex-wrap align-items-center justify-content-center card-container green-container">
+        <div class="bg-green-100 w-12rem m-3 border-round">
+
+            <p-listbox [options]="products" [(ngModel)]="selectedProducts" [metaKeySelection]="false" [filter]="true"
+                [multiple]="true" optionLabel="name">
+                <ng-template let-product pTemplate="item">
+                    <div class="country-item">
+                        <div>{{product.name}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+
+        </div>
+
+        <div class="bg-green-100 w-12rem m-3 border-round">
+            <button pButton pRipple (click)="showCreateDialog()" type="button" label="Create new product"
+                class="p-button-raised"></button>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Create new product" [(visible)]="displayDialog" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+
+    <form [formGroup]="newProductForm" (ngSubmit)="onSubmit()">
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                    <input type="text" required formControlName="name" pInputText placeholder="Product name">
+                </div>
+            </div>
+
+            <div class="col-12 md:col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">$</span>
+                    <input type="number" pInputText required formControlName="price" placeholder="Price">
+                    <span class="p-inputgroup-addon">.00</span>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-info-circle"></i></span>
+                    <input type="text" pInputText required formControlName="description" placeholder="Description">
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" [disabled]="!newProductForm.valid" (click)="onSubmit()" label="Ok" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="onCancel()" label="Cancel"
+            styleClass="p-button-danger p-button-text"></p-button>
+
+    </ng-template>
+</p-dialog>
